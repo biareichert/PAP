@@ -1,0 +1,91 @@
+-- Questão 1
+
+concatenacao :: Eq a => [a] -> [a] -> [a]
+concatenacao [] a =
+    a
+concatenacao (x:xs) a =
+    x : concatenacao xs a
+
+
+-- concatenacao (1:2:[]) a =
+-- 1 : concatenacao (2:[]) a =
+-- 1 : 2 : concatenacao [] a =
+-- 1 : 2 : a
+
+
+-- Questão 2
+
+pertence :: Eq a => a -> [a] -> Bool
+pertence a [] = False
+pertence a (x:xs) =
+  if a == x then
+    True
+  else
+    pertence a xs
+
+-- Questão 3
+
+intersecao :: Eq a => [a] -> [a] -> [a]
+intersecao [] y = []
+intersecao x [] = []
+intersecao xs (y:ys) =
+  if pertence y xs then
+    y : intersecao xs ys
+  else
+   intersecao xs ys
+
+-- Questão 4
+
+inverso :: [a] -> [a]
+inverso [] = []
+inverso l = inversoAc [] l
+    where 
+	inversoAc ac [] = ac
+        inversoAc ac (x:xs) = inversoAc (x:ac) xs
+
+-- Questão 5
+primeiros :: Int -> [a] -> [a]
+primeiros x [] = error "Lista vazia"
+primeiros 0 ys = []
+primeiros x (y:ys) =
+    y : primeiros (x-1) ys
+
+-- Questão 6
+ultimos :: Int -> [a] -> [a]
+ultimos x [] = error "Lista vazia"
+ultimos 0 ys = []
+ultimos x ys = inverso (primeiros (x) (inverso ys))
+	
+
+-- Questão 9
+
+menorValor :: [Int] -> Int
+menorValor [] =
+    error "Não rola"
+menorValor (x:xs) =
+    worker xs x
+    where
+        worker [] y =
+            y
+        worker (x:xs) y =
+            let menor = if x < y then
+                            x
+                        else
+                           y in
+            worker xs menor
+
+
+-- tamanho lista
+tamanhoLista :: [a] -> Int
+tamanhoLista [] = 0
+tamanhoLista (x:xs) = 1 + tamanhoLista (xs)
+
+
+{-
+        ultimos 2 [1,2,3] =
+        1 : ultimos 1 [2,3] =
+        1 : 2 : ultimos 0 [3] =
+        1 : 2 : [] =
+        [1, 2]
+http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
+-}
