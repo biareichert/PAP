@@ -39,11 +39,12 @@ intersecao xs (y:ys) =
 inverso :: [a] -> [a]
 inverso [] = []
 inverso l = inversoAc [] l
-    where 
+    where
 	inversoAc ac [] = ac
         inversoAc ac (x:xs) = inversoAc (x:ac) xs
 
 -- Questão 5
+
 primeiros :: Int -> [a] -> [a]
 primeiros x [] = error "Lista vazia"
 primeiros 0 ys = []
@@ -51,11 +52,28 @@ primeiros x (y:ys) =
     y : primeiros (x-1) ys
 
 -- Questão 6
+
 ultimos :: Int -> [a] -> [a]
 ultimos x [] = error "Lista vazia"
 ultimos 0 ys = []
 ultimos x ys = inverso (primeiros (x) (inverso ys))
-	
+
+-- Questão 7
+
+--binParaInt :: String -> Int
+--binParaInt
+--converte' :: [Int] -> Int
+--converte' [] = 0
+--converte' (x:xs) = ((2 ^ comprimento xs) * x) + (2 ^ (comprimento xs-1)) * x
+
+--ps: função comprimento mede o tamanho da cauda da lista atual
+
+-- Questão 8
+
+intParaBin :: Int -> String
+intParaBin 0 = 0
+intParaBin 1 = 1
+intParaBin n = n : intParaBin(n `div` 2) ++ show(n `mod` 2)
 
 -- Questão 9
 
