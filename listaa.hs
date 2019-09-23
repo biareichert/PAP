@@ -60,16 +60,15 @@ ultimos x ys = inverso (primeiros (x) (inverso ys))
 
 -- Questão 7
 
---binParaInt :: String -> Int
---binParaInt n = 
---	auxiliar n 
---	where
---		auxiliar n =
---			if n == 1 then
+binParaInt :: String -> Int
+binParaInt [] = 0
+binParaInt (x:xs) = ((2 ^ comprimento xs) * x) + (2 ^ (comprimento xs-1)) * x
 
 
+comprimento :: [a] -> Int
+comprimento [] = 0
+comprimento (x:xs) = 1 + comprimento (xs)
 
---binParaInt
 --converte' :: [Int] -> Int
 --converte' [] = 0
 --converte' (x:xs) = ((2 ^ comprimento xs) * x) + (2 ^ (comprimento xs-1)) * x
@@ -80,15 +79,15 @@ ultimos x ys = inverso (primeiros (x) (inverso ys))
 
 intParaBin :: Int -> String
 intParaBin n =
-	inverso (auxiliar n)
-	where
-		auxiliar 0 = "0"
-		auxiliar 1 = "1"
-		auxiliar n =
-		if n `mod` 2 == 0 then
-			'0' : auxiliar (n `div` 2)
-		else
-			'1' : auxiliar (n `div` 2)
+  inverso (auxiliar n)
+  where
+    auxiliar 0 = "0"
+    auxiliar 1 = "1"
+    auxiliar n =
+      if (n `mod` 2) == 0 then
+        '0' : auxiliar (n `div` 2)
+    	else
+        '1' : auxiliar (n `div` 2)
 
 -- Questão 9
 
@@ -107,34 +106,38 @@ menorValor (x:xs) =
                            y in
             worker xs menor
 
--- Questão 10 //terminar, ele remove todos
+-- Questão 10
 
 removerPrimeiro :: Eq a => [a] -> a -> [a]
 removerPrimeiro [] x = []
-removerPrimeiro (y:ys) x = 
+removerPrimeiro (y:ys) x =
 	if x == y then
-		removerPrimeiro ys x
+		ys
 	else
 		y : removerPrimeiro ys x
-        
--- Questão 11 //terminar preciso usar recursividade na função ordenar
 
+
+-- Questão 11
 
 ordenar :: Ord a => [a] -> [a]
 ordenar [] = []
-ordenar (y:ys) = 
-	auxiliar y x
-	where
-		auxiliar [] x = x
-		auxiliar (y:ys) = menorValor ys
-
+ordenar l =
+  ordenaAc [] l
+  where
+    ordenaAc ac [] = inverso ac
+    ordenaAc ac (x:xs) = ordenaAc ((menorValor (x:xs)):ac) (removerPrimeiro (x:xs) (menorValor (x:xs)))
+  {-
+  menor : ordenar (removerPrimeiro l menor)
+  where
+    menor = menorValor l
+  -}
 
 -- Questão 12
 
 dobrar_dir :: (a -> b -> b) -> b -> [a] -> b
 dobrar_dir f acc [] = acc
 dobrar_dir f acc (x:xs) =
-    f x (dobrar_dir f acc xs)    
+    f x (dobrar_dir f acc xs)
 
 
 -- Questão 13
@@ -144,21 +147,7 @@ dobrar_esq f acc [] = acc
 dobrar_esq f acc (x:xs) =
     dobrar_esq f (f acc x) xs
 
+-- Questão 14
 
 
--- tamanho lista
-tamanhoLista :: [a] -> Int
-tamanhoLista [] = 0
-tamanhoLista (x:xs) = 1 + tamanhoLista (xs)
-
-
-{-
-ordena [3,2,1] = 
-
-        ultimos 2 [1,2,3] =
-        1 : ultimos 1 [2,3] =
-        1 : 2 : ultimos 0 [3] =
-        1 : 2 : [] =
-        [1, 2]
-http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
--}
+-- http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
