@@ -40,7 +40,7 @@ inverso :: [a] -> [a]
 inverso [] = []
 inverso l = inversoAc [] l
     where
-	inversoAc ac [] = ac
+        inversoAc ac [] = ac
         inversoAc ac (x:xs) = inversoAc (x:ac) xs
 
 -- Questão 5
@@ -65,9 +65,9 @@ binParaInt "0" = 0
 binParaInt "1" = 1
 binParaInt (x:xs) = 
   let digito = if x == '0' then
-		0
-	       else
-		1 in
+                0
+               else
+                1 in
   digito * 2 ^ (tamanho xs) + binParaInt xs
 
 
@@ -111,10 +111,10 @@ menorValor (x:xs) =
 removerPrimeiro :: Eq a => [a] -> a -> [a]
 removerPrimeiro [] x = []
 removerPrimeiro (y:ys) x =
-	if x == y then
-		ys
-	else
-		y : removerPrimeiro ys x
+        if x == y then
+                ys
+        else
+                y : removerPrimeiro ys x
 
 
 -- Questão 11
@@ -157,10 +157,10 @@ dobrar_esq f acc (x:xs) =
 filtrar :: (a -> Bool) -> [a] -> [a]
 filtrar f [] = []
 filtrar f (x:xs) =
-	if f x then
-		x: filtrar f xs
-	else
-		filtrar f xs
+        if f x then
+                x: filtrar f xs
+        else
+                filtrar f xs
 -- Como funciona
 {-
 
