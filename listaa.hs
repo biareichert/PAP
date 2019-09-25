@@ -61,19 +61,19 @@ ultimos x ys = inverso (primeiros (x) (inverso ys))
 -- Questão 7
 
 binParaInt :: String -> Int
-binParaInt [] = 0
-binParaInt (x:xs) = ((2 ^ comprimento xs) * x) + (2 ^ (comprimento xs-1)) * x
+binParaInt "0" = 0
+binParaInt "1" = 1
+binParaInt (x:xs) = 
+  let digito = if x == '0' then
+		0
+	       else
+		1 in
+  digito * 2 ^ (tamanho xs) + binParaInt xs
 
 
-comprimento :: [a] -> Int
-comprimento [] = 0
-comprimento (x:xs) = 1 + comprimento (xs)
-
---converte' :: [Int] -> Int
---converte' [] = 0
---converte' (x:xs) = ((2 ^ comprimento xs) * x) + (2 ^ (comprimento xs-1)) * x
-
---ps: função comprimento mede o tamanho da cauda da lista atual
+tamanho :: [a] -> Int
+tamanho [] = 0
+tamanho (x:xs) = 1 + tamanho (xs)
 
 -- Questão 8
 
@@ -86,7 +86,7 @@ intParaBin n =
     auxiliar n =
       if (n `mod` 2) == 0 then
         '0' : auxiliar (n `div` 2)
-    	else
+      else
         '1' : auxiliar (n `div` 2)
 
 -- Questão 9
@@ -126,11 +126,16 @@ ordenar l =
   where
     ordenaAc ac [] = inverso ac
     ordenaAc ac (x:xs) = ordenaAc ((menorValor (x:xs)):ac) (removerPrimeiro (x:xs) (menorValor (x:xs)))
-  {-
-  menor : ordenar (removerPrimeiro l menor)
+
+-- Outra opção para questão 11
+
+ordenar2 :: Ord a => [a] -> [a]
+ordenar2 [] = []
+ordenar2 l =
+  menor : ordenar2 (removerPrimeiro l menor)
   where
     menor = menorValor l
-  -}
+ 
 
 -- Questão 12
 
@@ -149,5 +154,25 @@ dobrar_esq f acc (x:xs) =
 
 -- Questão 14
 
+filtrar :: (a -> Bool) -> [a] -> [a]
+filtrar f [] = []
+filtrar f (x:xs) =
+	if f x then
+		x: filtrar f xs
+	else
+		filtrar f xs
+-- Como funciona
+{-
 
+filtrar (<5) [1,2,3,4,5,6,7]
+1: filtrar (<5) [2,3,4,5,6,7]
+1: 2: filtrar (<5) [3,4,5,6,7]
+1: 2: 3: filtrar (<5) [4,5,6,7]
+1: 2: 3: 4: filtrar (<5) [5,6,7]
+1: 2: 3: 4: filtrar (<5) [6,7]
+1: 2: 3: 4: filtrar (<5) [7]
+1: 2: 3: 4: filtrar (<5) []
+1: 2: 3: 4: []
+
+-}
 -- http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
