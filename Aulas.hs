@@ -23,6 +23,8 @@ converterParaArvore :: [Int] -> Tree Int
 converterParaArvore (x:[]) = Leaf x
 converterParaArvore (x:xs) = Node (Leaf x) (converterParaArvore xs)
 
+#--------------------------------------
+
 repl :: IO ()
 repl = do
     putStr "?- "
