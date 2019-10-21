@@ -22,3 +22,21 @@ data Tree a = Leaf a
 converterParaArvore :: [Int] -> Tree Int
 converterParaArvore (x:[]) = Leaf x
 converterParaArvore (x:xs) = Node (Leaf x) (converterParaArvore xs)
+
+repl :: IO ()
+repl = do
+    putStr "?- "
+    line <- getLine
+    --testar se a linha é um predicado válido em Prolog
+    putStrLn("Voce digitou: "++line)
+    repl
+
+multiply :: [Int] -> [Int]
+multiply lista = do
+    x <- lista
+    y <- [2,10]
+    return (x*y)
+
+main :: IO()
+main = do
+    print $ multiply [1,3,7]
