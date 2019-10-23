@@ -91,4 +91,6 @@ type Name = (Int, String)
 
 type Predicate = (String, [Term])
 
-type Rule = (Predicate)
+type Rule = (Predicate, [Predicate])
+
+type Substitution = [(Name, Term)]
