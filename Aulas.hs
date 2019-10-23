@@ -66,7 +66,7 @@ unifyTerm (Var X) (Var Y) |  x == y =
 -- Caso (ATOM) implementar
 
 -- Caso (LEFT)
-unifyTerm (Var x) e | not (occursChek e x) =
+unifyTerm (Var x) e | not (occursCheck e x) =
 	Just [(x,e)]  
 
 -- Caso (RIGHT)
