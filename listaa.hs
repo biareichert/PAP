@@ -175,4 +175,9 @@ filtrar (<5) [1,2,3,4,5,6,7]
 1: 2: 3: 4: []
 
 -}
+
+--Questão 15
+
+impares :: [Int] -> [Int]
+impares x = filtrar (`mod` 2 == 1) x
 -- http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
