@@ -188,11 +188,23 @@ mapear :: (a -> b) -> [a] -> [b]
 mapear t [] = []
 mapear t (x:xs) = t x : mapear t xs
 
+--Questão 17
+
 {-
-mapear (*2) [1,2,3]
-2: mapear (*2) [2,3]
-2:4 mapear (*2) [3]
-2:4:6 mapear (*2) []
+
+primeiro :: [(a,b)] -> [a]
+primeiro [] = []
+primeiro (x:y) = mapear x ((x:xs):y)
 -}
+
+-- Questão 18
+
+todos :: [Bool] -> Bool
+todos x =
+    if dobrar_dir (&&) True x then
+        True
+    else
+        False
+
     
 -- http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
