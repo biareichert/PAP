@@ -194,7 +194,7 @@ mapear t (x:xs) = t x : mapear t xs
 
 primeiro :: [(a,b)] -> [a]
 primeiro [] = []
-primeiro (x:y) = mapear x ((x:xs):y)
+primeiro ((x,xs):y) = x : primeiro y
 -}
 
 -- Questão 18
