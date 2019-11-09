@@ -206,5 +206,13 @@ todos x =
     else
         False
 
-    
+-- Questão 19
+
+data Tree a = Leaf a | Branch (Tree a) (Tree a)
+maior :: Ord a => Tree a -> a
+maior a = 
+    if a > maior a then
+        x
+    else
+        maior a
 -- http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
