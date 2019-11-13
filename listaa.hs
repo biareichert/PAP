@@ -190,13 +190,12 @@ mapear t (x:xs) = t x : mapear t xs
 
 --Questão 17
 
-{-
+first :: (a, b) -> a 
+first (x,y) = x
 
 primeiro :: [(a,b)] -> [a]
 primeiro [] = []
-primeiro ((x,xs):y) = x : primeiro y
-
--}
+primeiro xs = mapear (first) xs
 
 -- Questão 18
 
