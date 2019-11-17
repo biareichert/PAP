@@ -196,7 +196,7 @@ first (x,y) = x
 primeiro :: [(a,b)] -> [a]
 primeiro [] = []
 primeiro xs = mapear (first) xs
--- first não esta pegando a função que eu fiz, ele pega função pronta
+
 -- Questão 18
 
 todos :: [Bool] -> Bool
