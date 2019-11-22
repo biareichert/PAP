@@ -30,9 +30,13 @@ whitespace (x:xs) =
     else
         x : whitespace xs
 
-compose :: Unifier -> Unifier -> Unifier
+mapear :: (a -> b) -> [a] -> [b]
+mapear t [] = []
+mapear t (x:xs) = t x : mapear t xs
+
+compose :: unify -> unify -> unify
 compose xs ys =
-    ++ xs (mapear subst_in_unifier xs) ys
+    ++ xs (mapear Substitution xs) ys
 
 --substTerm :: Substitution -> Term -> Term
 
@@ -63,10 +67,10 @@ unify (Atom a) (Atom b) =
     Just []
 
 -- Regra (ARROW)
---unify (TypeArrow t1 r1) (TypeArrow t2 r2) = do
---   theta1 <- unify t1 t2
---   theta2 <- unify (subst theta1 r1) (subst theta1 r2)
---   Just (compose theta2 theta1)
+unify (Predicate t1 r1) (Predicate t2 r2) = do
+   theta1 <- unify t1 t2
+   theta2 <- unify (substPred theta1 r1) (substPred theta1 r2)
+   Just (compose theta2 theta1)
 
 -- Caso geral (não dá pra unificar)
 unify a b =
