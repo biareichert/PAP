@@ -30,13 +30,17 @@ whitespace (x:xs) =
     else
         x : whitespace xs
 
+subst_in_unifier :: Unifier -> (Name, Type) -> (Name, Type)
+subst_in_unifier u (name, t) =
+    (name, subst u t)
+
 mapear :: (a -> b) -> [a] -> [b]
 mapear t [] = []
 mapear t (x:xs) = t x : mapear t xs
 
 compose :: unify -> unify -> unify
 compose xs ys =
-    ++ xs (mapear Substitution xs) ys
+    ++ xs (mapear subst_in_unifier xs) ys
 
 --substTerm :: Substitution -> Term -> Term
 
@@ -94,6 +98,16 @@ occursCheck (Predicate (s, (t:ts))) n =
 
 -- freshen :: Rule -> Rule
 
+-- resolve :: Predicate -> [Rule] -> [Substitution]
+-- resolve goal rules =
+--    let rules' = fmap freshen rules in
+--    do
+--        (pred, body) <- rules'
+--        case unifyPred goal pred of
+--            Just u->
+--               resolveBody rules' u body
+--            Nothing ->
+--                []
 
 resolve :: Predicate -> [Rule] -> [Substitution]
 -- resolve :: Predicate -> [Rule] -> Substitution
@@ -104,8 +118,15 @@ resolve goal ( (pred, body) : rules) =
     else
         (resolve goal rules)
 
---resolveBody :: Substitution -> [Rule] -> [Predicate] -> [Substitution]
 
+resolveBody :: Substitution -> [Rule] -> [Predicate] -> [Substitution]
+resolveBody t1 rules [] =
+    return t1
+resolveBody t1 rules (p:ps) =
+    let rules' = fmap freshen rules in
+    do
+        t2 <- resolve (substPred t1 p) rules'
+        resolveBody (compose t2 t1) rules' ps
 
 -- =========== Parser ===========
 
@@ -152,6 +173,9 @@ verify (goal_str, ( (Atom goal_t) : goal_ts)) (pred_str, ( (Atom pred_t) : pred_
 
 verify (goal_str, (goal_t : goal_ts)) (pred_str, (pred_t : pred_ts)) =
     True && (verify (goal_str, (goal_ts)) (pred_str, (pred_ts)))
+
+--unifyPred :: Predicate -> Predicate -> Maybe Substitution
+--unifyPred a b = Nothing
 
 unifyPred :: Predicate -> Predicate -> Maybe [Substitution]
 unifyPred (str_a, [] ) (str_b, []) = []
