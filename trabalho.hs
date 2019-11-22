@@ -24,9 +24,6 @@ variable = do
 parse_type :: Parser Term
 parse_type =
   try atom <|> variable
-  
-db :: [Rule]
-db = [  (Predicate ("likes", ["ana", "banana"])) ]
 
 main :: IO()
 main = do
@@ -113,3 +110,13 @@ freshen :: Rule -> Rule
 resolve :: Predicate -> [Rule] -> [Substitution]
 
 resolveBody :: Substitution -> [Rule] -> [Predicate] -> [Substitution]
+
+db1 :: [Rule]
+db1 = [ (("likes", [ (Atom "ana"), (Atom "banana") ]), []),
+        (("likes", [ (Atom "ana"), (Atom "potato") ]), []),
+        (("likes", [ (Atom "bob"), (Atom "potato") ]), []) ]
+
+db2 :: [Rule]
+db2 = [ (("likes", [ (Atom "ana"),    (Var (1, "Y")) ]), []),
+        (("likes", [ (Atom "ana"), (Atom "potato") ]), []),
+        (("dislikes", [ (Atom "bob"), (Atom "potato") ]), []) ]
