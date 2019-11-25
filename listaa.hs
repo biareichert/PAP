@@ -205,14 +205,32 @@ todos x =
         True
     else
         False
+        
+--  Questão 19
 
--- Questão 19
+data Tree a = Leaf a
+            | Branch (Tree a) (Tree a)
 
-data Tree a = Leaf a | Branch (Tree a) (Tree a)
-maior :: Ord a => Tree a -> a
-maior a = 
-    if a > maior a then
-        x
+maior_item_tree :: Ord a => Tree a -> a
+maior_item_tree (Leaf x) = x
+maior_item_tree (Branch x y) =
+    if (maior_item_tree x) > (maior_item_tree y ) then
+        maior_item_tree x
     else
-        maior a
+        maior_item_tree y
+
+--  Questão 20
+
+altura_tree :: Tree a -> Int
+altura_tree (Leaf a) = 0
+altura_tree (Branch a b) =
+    if (altura_tree a) > (altura_tree b) then
+        1 + altura_tree a
+    else
+        1 + altura_tree b
+
+-- tree_ex0 = Branch (Leaf 10) (Leaf 20)
+-- tree_ex1 = Branch (Leaf 10) (Branch (Leaf 20) (Leaf 30))
+-- tree_ex2 = Branch (Branch (Leaf 5) (Leaf 15)) (Branch (Leaf 20) (Branch (Leaf 5) (Leaf 15)))
+
 -- http://wiki.di.uminho.pt/twiki/pub/Education/Archive/ProgramacaoFuncional/PF65-80.pdf
